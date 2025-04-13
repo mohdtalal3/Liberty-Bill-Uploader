@@ -21,6 +21,7 @@ A simplified utility for automating the management of electricity billing data f
 
 1. Clone or download this repository
 2. Install required packages:
+
 For windows:
    ```bash
    pip install xlwings pandas requests seleniumbase
