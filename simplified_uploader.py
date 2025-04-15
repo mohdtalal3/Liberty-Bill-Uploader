@@ -9,6 +9,7 @@ import pandas as pd
 from datetime import datetime
 import re
 import time
+import os
 from liberty_api import get_electricity_data
 
 def extract_account_number(building_name_text):
@@ -46,18 +47,28 @@ def main(token):
     try:
         print("===== Liberty Bill Uploader =====")
         
-        # Get the start date (will be used as both start and end date)
-        while True:
-            start_date_str = input("Enter date to process (YYYY-MM-DD): ")
+        # Get the date from environment variable or prompt user if not provided
+        start_date_str = os.environ.get('SELECTED_DATE')
+        if not start_date_str:
+            while True:
+                start_date_str = input("Enter date to process (YYYY-MM-DD): ")
+                try:
+                    start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
+                    break
+                except ValueError:
+                    print("Invalid date format. Please use YYYY-MM-DD.")
+        else:
             try:
                 start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
-                break
             except ValueError:
-                print("Invalid date format. Please use YYYY-MM-DD.")
+                print(f"Invalid date format: {start_date_str}. Using current date.")
+                start_date = datetime.now()
+                start_date_str = start_date.strftime("%Y-%m-%d")
         
         # Open the Excel file
         print("\nOpening Excel file...")
-        wb = xw.Book("MWTC UTILITY BILLS - DASHBOARD.xlsm")
+        excel_file = os.environ.get('EXCEL_FILE', "MWTC UTILITY BILLS - DASHBOARD.xlsm")
+        wb = xw.Book(excel_file)
         sheet = wb.sheets["COLEVILLE ELECTRICITY"]
         
         # Get dimensions
@@ -232,4 +243,4 @@ def main(token):
             pass
 
 if __name__ == "__main__":
-    main() 
+    main(None)  # Pass None as token when running standalone 

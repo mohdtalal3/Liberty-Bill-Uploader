@@ -1,55 +1,42 @@
 # Liberty Bill Uploader
 
-A simplified utility for automating the management of electricity billing data from Liberty Energy & Water. This tool automatically processes and uploads billing data to an Excel spreadsheet by fetching data from the Liberty API.
+A GUI application for uploading Liberty Energy bill data.
 
 ## Features
 
-- Automatically extracts account numbers from the Excel sheet
-- Fetches electricity usage data from Liberty's API for all accounts
-- Adds new entries to the Excel sheet with proper formatting
-- Checks for duplicate entries to avoid data redundancy
-- Preserves formatting of existing Excel data
+- User-friendly PyQt5 interface
+- Excel file selection
+- Date selection with calendar
+- Two-step process: login and upload
+- Automatic token extraction
+
+## Installation
+
+1. Clone this repository
+2. Install the required packages:
+
+```
+pip install -r requirements.txt
+```
+
+## Usage
+
+1. Run the application:
+
+```
+python bill_utility_gui.py
+```
+
+2. Select your Excel file using the file browser
+3. Choose the appropriate date using the date picker
+4. Click "Step 1: Login to Liberty" to open Chrome and login to your account
+5. After successful login, click "Step 2: Upload Bill Data" to process and upload the bill data
 
 ## Requirements
 
 - Python 3.6+
-- xlwings
-- pandas
-- requests
-
-## Installation
-
-1. Clone or download this repository
-2. Install required packages:
-
-For windows:
-   ```bash
-   pip install xlwings pandas requests seleniumbase
-   ```
-For Mac:
-
-   ```bash
-   pip3 install xlwings pandas requests seleniumbase
-   ```
-## Usage
-
-Run the utility script:
-
-```bash
-python bill_utility.py
-```
-For Mac:
-
-```bash
-python3 bill_utility.py
-```
-
-The utility will:
-1. Ask you to enter a date to process in YYYY-MM-DD format
-2. Automatically find all account numbers in the Excel file
-3. Fetch data from the Liberty API for each account for the specified date
-4. Add entries to the Excel file, skipping any that already exist
-5. Save changes automatically when complete
+- Chrome browser
+- Internet connection
 
 ## Files
 
